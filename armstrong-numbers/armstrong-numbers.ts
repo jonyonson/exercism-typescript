@@ -1,14 +1,10 @@
+function sum(numbers: number[]) {
+  return numbers.reduce((acc, cv) => acc + Math.pow(cv, numbers.length), 0);
+}
+
 export default class ArmstrongNumbers {
-  static isArmstrongNumber(num: number): boolean {
-    const digits = num
-      .toString()
-      .split('')
-      .map((x) => Number(x));
-
-    const sum = digits.reduce((acc, cv) => {
-      return acc + Math.pow(cv, digits.length);
-    }, 0);
-
-    return sum === num;
+  static isArmstrongNumber(number: number): boolean {
+    const digits = [...number.toString()].map((x) => Number(x));
+    return sum(digits) === number;
   }
 }
