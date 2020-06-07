@@ -1,16 +1,4 @@
-type Color =
-  | 'black'
-  | 'brown'
-  | 'red'
-  | 'orange'
-  | 'yellow'
-  | 'green'
-  | 'blue'
-  | 'violet'
-  | 'grey'
-  | 'white';
-
-const colorValue = {
+const colors = {
   black: 0,
   brown: 1,
   red: 2,
@@ -22,6 +10,8 @@ const colorValue = {
   grey: 8,
   white: 9,
 };
+
+type Color = keyof typeof colors;
 
 export class ResistorColor {
   private bands: Color[];
@@ -35,6 +25,6 @@ export class ResistorColor {
   }
 
   value(): number {
-    return colorValue[this.bands[0]] * 10 + colorValue[this.bands[1]];
+    return colors[this.bands[0]] * 10 + colors[this.bands[1]];
   }
 }
