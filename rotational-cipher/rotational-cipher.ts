@@ -13,17 +13,7 @@ export default class RotationalCipher {
   private static encrypt(char: string, rotations: number): string {
     if (char.match(/[a-z]/i)) {
       const code = char.charCodeAt(0);
-      let upperBounds, lowerBounds;
-
-      // Uppercase letter
-      if (code < RotationalCipher.LOWERCASE_A_CODE) {
-        upperBounds = RotationalCipher.UPPERCASE_Z_CODE;
-        lowerBounds = RotationalCipher.UPPERCASE_A_CODE;
-      } else {
-        // Lowercase letter
-        upperBounds = RotationalCipher.LOWERCASE_Z_CODE;
-        lowerBounds = RotationalCipher.LOWERCASE_A_CODE;
-      }
+      let [upperBounds, lowerBounds] = RotationalCipher.getBounds(code);
 
       if (code >= lowerBounds && code <= upperBounds) {
         return String.fromCharCode(
@@ -33,5 +23,21 @@ export default class RotationalCipher {
     }
 
     return char;
+  }
+
+  private static getBounds(code: number): number[] {
+    let upperBounds, lowerBounds;
+
+    // Uppercase letter
+    if (code < RotationalCipher.LOWERCASE_A_CODE) {
+      upperBounds = RotationalCipher.UPPERCASE_Z_CODE;
+      lowerBounds = RotationalCipher.UPPERCASE_A_CODE;
+    } else {
+      // Lowercase letter
+      upperBounds = RotationalCipher.LOWERCASE_Z_CODE;
+      lowerBounds = RotationalCipher.LOWERCASE_A_CODE;
+    }
+
+    return [upperBounds, lowerBounds];
   }
 }
