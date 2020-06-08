@@ -1,4 +1,4 @@
-const colors = {
+const colorMap = {
   black: 0,
   brown: 1,
   red: 2,
@@ -11,7 +11,7 @@ const colors = {
   white: 9,
 };
 
-type Color = keyof typeof colors;
+type Color = keyof typeof colorMap;
 
 export class ResistorColor {
   private bands: Color[];
@@ -25,6 +25,7 @@ export class ResistorColor {
   }
 
   value(): number {
-    return colors[this.bands[0]] * 10 + colors[this.bands[1]];
+    const [color1, color2] = this.bands;
+    return colorMap[color1] * 10 + colorMap[color2];
   }
 }
