@@ -24,8 +24,7 @@ class Transcriptor {
       throw new Error('Invalid input DNA.');
     }
 
-    const rna: RNA = this.dnaToRna[nucleotide];
-    return rna;
+    return this.dnaToRna[nucleotide];
   }
 }
 
