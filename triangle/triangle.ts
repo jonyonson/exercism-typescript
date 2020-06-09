@@ -7,13 +7,8 @@ export default class Triangle {
     this.sides = sides;
   }
 
-  private checkForValidTriangle(): void {
+  private checkTriangleInequality(): void {
     const [side1, side2, side3] = this.sides.sort((a, b) => a - b);
-    // Throw if any sides are less than or equal to 0
-    if (side1 <= 0) {
-      throw new Error('The length of all sides have to be greater than 0');
-    }
-    // Throw if the sum of any two sides are less than the third
     if (side1 + side2 < side3) {
       throw new Error(
         'The sum of the lengths of any two sides must be greater than or equal to the length of the third side.',
@@ -21,8 +16,15 @@ export default class Triangle {
     }
   }
 
+  private checkForValidLengths(): void {
+    if (!this.sides.every((side) => side > 0)) {
+      throw new Error('The length of all sides have to be greater than 0');
+    }
+  }
+
   kind(): TriangleType {
-    this.checkForValidTriangle();
+    this.checkTriangleInequality();
+    this.checkForValidLengths();
 
     let triangle: TriangleType;
     const [side1, side2, side3] = this.sides;
