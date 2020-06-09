@@ -39,8 +39,8 @@ export default class SpaceAge {
     return this.formatYears(164.79132);
   }
 
-  private formatYears(orbitsPerEartYear: number): number {
-    const years = this.seconds / (this.secondsInYear * orbitsPerEartYear);
+  private formatYears(orbitsPerEarthYear: number): number {
+    const years = this.seconds / (this.secondsInYear * orbitsPerEarthYear);
     return +years.toFixed(2);
   }
 }
