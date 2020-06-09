@@ -22,16 +22,24 @@ export default class Triangle {
     }
   }
 
+  private matchingSides(): number {
+    const set = new Set(this.sides);
+    let _matchingSides = 0;
+    if (set.size === 2) _matchingSides = 2;
+    if (set.size === 1) _matchingSides = 3;
+
+    return _matchingSides;
+  }
+
   kind(): TriangleType {
     this.checkTriangleInequality();
     this.checkForValidLengths();
 
     let triangle: TriangleType;
-    const [side1, side2, side3] = this.sides;
 
-    if (side1 === side2 && side2 === side3) {
+    if (this.matchingSides() === 3) {
       triangle = 'equilateral';
-    } else if (side1 === side2 || side1 === side3 || side2 === side3) {
+    } else if (this.matchingSides() === 2) {
       triangle = 'isosceles';
     } else {
       triangle = 'scalene';
