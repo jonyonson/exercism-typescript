@@ -9,9 +9,11 @@ const orbitsPerEarthYear = {
   neptune: 164.79132,
 };
 
+type Planet = keyof typeof orbitsPerEarthYear;
+
 export default class SpaceAge {
   readonly seconds: number;
-  private readonly secondsInAnEarthYear: number = 31557600;
+  private static readonly secondsInAnEarthYear: number = 31557600;
 
   constructor(seconds: number) {
     this.seconds = seconds;
@@ -59,7 +61,7 @@ export default class SpaceAge {
 
   private formatYears(orbitsPerEarthYear: number): number {
     const years =
-      this.seconds / (this.secondsInAnEarthYear * orbitsPerEarthYear);
+      this.seconds / (SpaceAge.secondsInAnEarthYear * orbitsPerEarthYear);
     return Number(years.toFixed(2));
   }
 }
