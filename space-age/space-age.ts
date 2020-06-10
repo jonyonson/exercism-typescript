@@ -1,4 +1,14 @@
-const orbitsPerEarthYear = {
+type Planet =
+  | 'earth'
+  | 'mercury'
+  | 'venus'
+  | 'mars'
+  | 'jupiter'
+  | 'saturn'
+  | 'uranus'
+  | 'neptune';
+
+const orbitsPerEarthYear: { [key in Planet]: number } = {
   earth: 1,
   mercury: 0.2408467,
   venus: 0.61519726,
@@ -9,8 +19,6 @@ const orbitsPerEarthYear = {
   neptune: 164.79132,
 };
 
-type Planet = keyof typeof orbitsPerEarthYear;
-
 export default class SpaceAge {
   readonly seconds: number;
   private static readonly secondsInAnEarthYear: number = 31557600;
@@ -19,49 +27,20 @@ export default class SpaceAge {
     this.seconds = seconds;
   }
 
-  onEarth(): number {
-    const { earth } = orbitsPerEarthYear;
-    return this.formatYears(earth);
-  }
+  onEarth = (): number => this.formatYears('earth');
+  onMercury = (): number => this.formatYears('mercury');
+  onVenus = (): number => this.formatYears('venus');
+  onMars = (): number => this.formatYears('mars');
+  onJupiter = (): number => this.formatYears('jupiter');
+  onSaturn = (): number => this.formatYears('saturn');
+  onUranus = (): number => this.formatYears('uranus');
+  onNeptune = (): number => this.formatYears('neptune');
 
-  onMercury(): number {
-    const { mercury } = orbitsPerEarthYear;
-    return this.formatYears(mercury);
-  }
-
-  onVenus(): number {
-    const { venus } = orbitsPerEarthYear;
-    return this.formatYears(venus);
-  }
-
-  onMars(): number {
-    const { mars } = orbitsPerEarthYear;
-    return this.formatYears(mars);
-  }
-
-  onJupiter(): number {
-    const { jupiter } = orbitsPerEarthYear;
-    return this.formatYears(jupiter);
-  }
-
-  onSaturn(): number {
-    const { saturn } = orbitsPerEarthYear;
-    return this.formatYears(saturn);
-  }
-
-  onUranus(): number {
-    const { uranus } = orbitsPerEarthYear;
-    return this.formatYears(uranus);
-  }
-
-  onNeptune(): number {
-    const { neptune } = orbitsPerEarthYear;
-    return this.formatYears(neptune);
-  }
-
-  private formatYears(orbitsPerEarthYear: number): number {
+  private formatYears(planet: Planet): number {
     const years =
-      this.seconds / (SpaceAge.secondsInAnEarthYear * orbitsPerEarthYear);
+      this.seconds /
+      (SpaceAge.secondsInAnEarthYear * orbitsPerEarthYear[planet]);
+
     return Number(years.toFixed(2));
   }
 }
