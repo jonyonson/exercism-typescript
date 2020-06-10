@@ -27,16 +27,16 @@ export default class SpaceAge {
     this.seconds = seconds;
   }
 
-  onEarth = (): number => this.formatYears('earth');
-  onMercury = (): number => this.formatYears('mercury');
-  onVenus = (): number => this.formatYears('venus');
-  onMars = (): number => this.formatYears('mars');
-  onJupiter = (): number => this.formatYears('jupiter');
-  onSaturn = (): number => this.formatYears('saturn');
-  onUranus = (): number => this.formatYears('uranus');
-  onNeptune = (): number => this.formatYears('neptune');
+  onEarth = (): number => this.formatAge('earth');
+  onMercury = (): number => this.formatAge('mercury');
+  onVenus = (): number => this.formatAge('venus');
+  onMars = (): number => this.formatAge('mars');
+  onJupiter = (): number => this.formatAge('jupiter');
+  onSaturn = (): number => this.formatAge('saturn');
+  onUranus = (): number => this.formatAge('uranus');
+  onNeptune = (): number => this.formatAge('neptune');
 
-  private formatYears(planet: Planet): number {
+  private formatAge(planet: Planet): number {
     const years =
       this.seconds /
       (SpaceAge.secondsInAnEarthYear * orbitsPerEarthYear[planet]);
