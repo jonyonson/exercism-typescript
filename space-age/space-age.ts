@@ -1,46 +1,65 @@
+const orbitsPerEarthYear = {
+  earth: 1,
+  mercury: 0.2408467,
+  venus: 0.61519726,
+  mars: 1.8808158,
+  jupiter: 11.862615,
+  saturn: 29.447498,
+  uranus: 84.016846,
+  neptune: 164.79132,
+};
+
 export default class SpaceAge {
-  seconds: number;
-  secondsInYear: number;
+  readonly seconds: number;
+  private readonly secondsInAnEarthYear: number = 31557600;
 
   constructor(seconds: number) {
     this.seconds = seconds;
-    this.secondsInYear = 31557600;
   }
 
   onEarth(): number {
-    return this.formatYears(1);
+    const { earth } = orbitsPerEarthYear;
+    return this.formatYears(earth);
   }
 
   onMercury(): number {
-    return this.formatYears(0.2408467);
+    const { mercury } = orbitsPerEarthYear;
+    return this.formatYears(mercury);
   }
 
   onVenus(): number {
-    return this.formatYears(0.61519726);
+    const { venus } = orbitsPerEarthYear;
+    return this.formatYears(venus);
   }
 
   onMars(): number {
-    return this.formatYears(1.8808158);
+    const { mars } = orbitsPerEarthYear;
+    return this.formatYears(mars);
   }
 
   onJupiter(): number {
-    return this.formatYears(11.862615);
+    const { jupiter } = orbitsPerEarthYear;
+    return this.formatYears(jupiter);
   }
 
   onSaturn(): number {
-    return this.formatYears(29.447498);
+    const { saturn } = orbitsPerEarthYear;
+    return this.formatYears(saturn);
   }
 
   onUranus(): number {
-    return this.formatYears(84.016846);
+    const { uranus } = orbitsPerEarthYear;
+    return this.formatYears(uranus);
   }
 
   onNeptune(): number {
-    return this.formatYears(164.79132);
+    const { neptune } = orbitsPerEarthYear;
+    return this.formatYears(neptune);
   }
 
   private formatYears(orbitsPerEarthYear: number): number {
-    const years = this.seconds / (this.secondsInYear * orbitsPerEarthYear);
+    const years =
+      this.seconds / (this.secondsInAnEarthYear * orbitsPerEarthYear);
     return Number(years.toFixed(2));
   }
 }
