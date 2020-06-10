@@ -2,7 +2,7 @@ type Dna = 'A' | 'C' | 'G' | 'T';
 
 class NucleotideCount {
   static nucleotideCounts(dna: string) {
-    this.isValidDNA(dna);
+    this.throwIfDNASequenceIsInvalid(dna);
 
     const nucleotideCount: { [key in Dna]: number } = {
       A: 0,
@@ -11,14 +11,12 @@ class NucleotideCount {
       T: 0,
     };
 
-    for (let i = 0; i < dna.length; i++) {
-      nucleotideCount[dna[i] as Dna]++;
-    }
+    [...dna].forEach((strand) => nucleotideCount[strand as Dna]++);
 
     return nucleotideCount;
   }
 
-  private static isValidDNA(dna: string) {
+  private static throwIfDNASequenceIsInvalid(dna: string) {
     if (!/^$|^[ACGT]+$/.test(dna)) {
       throw new Error('Invalid nucleotide in strand');
     }
