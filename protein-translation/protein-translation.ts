@@ -7,6 +7,24 @@ type Protein =
   | 'Cysteine'
   | 'Tryptophan';
 
+type Codon =
+  | 'AUG'
+  | 'UUU'
+  | 'UUC'
+  | 'UUA'
+  | 'UUG'
+  | 'UCC'
+  | 'UCA'
+  | 'UCG'
+  | 'UAU'
+  | 'UAC'
+  | 'UGU'
+  | 'UGC'
+  | 'UGG'
+  | 'UAA'
+  | 'UGA'
+  | 'UAG';
+
 const codonToProtein: { [key: string]: Protein } = {
   AUG: 'Methionine',
   UUU: 'Phenylalanine',
@@ -31,9 +49,15 @@ class ProteinTranslation {
     const codons = this.codons(rnaSequence);
     const proteins: Protein[] = [];
 
-    for (let i = 0; i < codons.length; i++) {
-      if (stopCodons.includes(codons[i])) break;
-      const protein = codonToProtein[codons[i]];
+    // for (let i = 0; i < codons.length; i++) {
+    //   if (stopCodons.includes(codons[i])) break;
+    //   const protein = codonToProtein[codons[i]];
+    //   proteins.push(protein);
+    // }
+
+    for (const codon of codons) {
+      if (stopCodons.includes(codon)) break;
+      const protein = codonToProtein[codon];
       proteins.push(protein);
     }
 
