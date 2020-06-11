@@ -7,7 +7,10 @@ type Protein =
   | 'Cysteine'
   | 'Tryptophan';
 
-type Codon =
+type StopCodon = 'UAA' | 'UAG' | 'UGA';
+type Codon = StopCodon | CodonWithTranslation;
+
+type CodonWithTranslation =
   | 'AUG'
   | 'UUU'
   | 'UUC'
@@ -21,12 +24,9 @@ type Codon =
   | 'UAC'
   | 'UGU'
   | 'UGC'
-  | 'UGG'
-  | 'UAA'
-  | 'UGA'
-  | 'UAG';
+  | 'UGG';
 
-const codonToProtein: { [K in Codon]: Protein } = {
+const codonToProtein: { [K in CodonWithTranslation]: Protein } = {
   AUG: 'Methionine',
   UUU: 'Phenylalanine',
   UUC: 'Phenylalanine',
@@ -54,15 +54,17 @@ class ProteinTranslation {
 
     for (const codon of codons) {
       if (stopCodons.includes(codon)) break;
-      const protein = codonToProtein[codon];
-      proteins.push(protein);
+      if (this.isCodonWithTranslation(codon)) {
+        const protein = codonToProtein[codon];
+        proteins.push(protein);
+      }
     }
 
     return proteins;
   }
 
   private static codons(rna: string): Codon[] {
-    const maybeCodons: string[] = rna.match(/.{3}/g) ?? [];
+    const maybeCodons: string[] = rna.match(/.{3}/g) || [];
     let codons = maybeCodons.map((a) => this.assertCodons(a));
     return codons;
   }
@@ -73,6 +75,11 @@ class ProteinTranslation {
     } else {
       return s as Codon;
     }
+  }
+
+  private static isCodonWithTranslation(s: string): s is CodonWithTranslation {
+    const re = /^(AUG|UUU|UUC|UUA|UUG|UCU|UCC|UCA|UCG|UAU|UAC|UGU|UGC|UGG)$/;
+    return re.test(s);
   }
 }
 
