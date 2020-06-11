@@ -13,6 +13,7 @@ type Codon =
   | 'UUC'
   | 'UUA'
   | 'UUG'
+  | 'UCU'
   | 'UCC'
   | 'UCA'
   | 'UCG'
@@ -25,7 +26,7 @@ type Codon =
   | 'UGA'
   | 'UAG';
 
-const codonToProtein: { [key: string]: Protein } = {
+const codonToProtein: { [K in Codon]: Protein } = {
   AUG: 'Methionine',
   UUU: 'Phenylalanine',
   UUC: 'Phenylalanine',
@@ -45,6 +46,8 @@ const codonToProtein: { [key: string]: Protein } = {
 const stopCodons = ['UAA', 'UAG', 'UGA'];
 
 class ProteinTranslation {
+  private static validCodons = Object.keys(codonToProtein).concat(stopCodons);
+
   static proteins(rnaSequence: string): Protein[] {
     const codons = this.codons(rnaSequence);
     const proteins: Protein[] = [];
@@ -58,10 +61,18 @@ class ProteinTranslation {
     return proteins;
   }
 
-  private static codons(rna: string): Codon[] | [] {
-    const codons: Codon[] | [] = rna.match(/.{3}/g) ?? [];
-
+  private static codons(rna: string): Codon[] {
+    const maybeCodons: string[] = rna.match(/.{3}/g) ?? [];
+    let codons = maybeCodons.map((a) => this.assertCodons(a));
     return codons;
+  }
+
+  private static assertCodons(s: string): Codon {
+    if (!this.validCodons.includes(s)) {
+      throw new Error('Invalid RNA Sequence');
+    } else {
+      return s as Codon;
+    }
   }
 }
 
