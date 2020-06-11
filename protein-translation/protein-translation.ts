@@ -49,12 +49,6 @@ class ProteinTranslation {
     const codons = this.codons(rnaSequence);
     const proteins: Protein[] = [];
 
-    // for (let i = 0; i < codons.length; i++) {
-    //   if (stopCodons.includes(codons[i])) break;
-    //   const protein = codonToProtein[codons[i]];
-    //   proteins.push(protein);
-    // }
-
     for (const codon of codons) {
       if (stopCodons.includes(codon)) break;
       const protein = codonToProtein[codon];
@@ -64,13 +58,8 @@ class ProteinTranslation {
     return proteins;
   }
 
-  private static codons(rna: string): string[] {
-    const codons: string[] = [];
-
-    for (let i = 0; i < rna.length; i += 3) {
-      const codon = [...rna].slice(i, i + 3).join('');
-      codons.push(codon);
-    }
+  private static codons(rna: string): Codon[] | [] {
+    const codons: Codon[] | [] = rna.match(/.{3}/g) ?? [];
 
     return codons;
   }
