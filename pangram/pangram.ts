@@ -1,23 +1,20 @@
 export default class Pangram {
   readonly sentence: string;
+  private readonly ALPHABET_LENGTH: number = 26;
 
   constructor(sentence: string) {
     this.sentence = sentence;
   }
 
+  private isLetterInAlphabet = (char: string): boolean => /[a-z]/gi.test(char);
+
   isPangram(): boolean {
-    const usedLetters = new Set();
+    const characters = [...this.sentence.toLowerCase()].filter((c) =>
+      this.isLetterInAlphabet(c),
+    );
 
-    for (const char of this.sentence) {
-      if (this.isLetterInAlphabet(char)) {
-        usedLetters.add(char.toLowerCase());
-      }
-    }
+    const usedLetters = new Set(characters);
 
-    return usedLetters.size === 26;
-  }
-
-  isLetterInAlphabet(char: string): boolean {
-    return /[a-z]/gi.test(char);
+    return usedLetters.size === this.ALPHABET_LENGTH;
   }
 }
