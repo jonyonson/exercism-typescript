@@ -6,13 +6,8 @@ export default class Pangram {
     this.sentence = sentence;
   }
 
-  private isLetterInAlphabet = (char: string): boolean => /[a-z]/gi.test(char);
-
   isPangram(): boolean {
-    const characters = [...this.sentence.toLowerCase()].filter((c) =>
-      this.isLetterInAlphabet(c),
-    );
-
+    const characters = this.sentence.toLowerCase().replace(/[^a-z]/g, '');
     const usedLetters = new Set(characters);
 
     return usedLetters.size === this.ALPHABET_LENGTH;
