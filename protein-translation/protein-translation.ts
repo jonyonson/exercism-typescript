@@ -80,8 +80,7 @@ class ProteinTranslation {
   }
 
   private static isCodonWithTranslation(s: string): s is CodonWithTranslation {
-    const re = /^(AUG|UUU|UUC|UUA|UUG|UCU|UCC|UCA|UCG|UAU|UAC|UGU|UGC|UGG)$/;
-    return re.test(s);
+    return s in codonToProtein;
   }
 }
 
