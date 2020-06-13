@@ -7,10 +7,7 @@ type Protein =
   | 'Cysteine'
   | 'Tryptophan';
 
-type StopCodon = 'UAA' | 'UAG' | 'UGA';
-type Codon = StopCodon | CodonWithTranslation;
-
-type CodonWithTranslation =
+type Codon =
   | 'AUG'
   | 'UUU'
   | 'UUC'
@@ -24,9 +21,15 @@ type CodonWithTranslation =
   | 'UAC'
   | 'UGU'
   | 'UGC'
-  | 'UGG';
+  | 'UGG'
+  | 'UAA'
+  | 'UAG'
+  | 'UGA';
 
-const codonToProtein: { [K in CodonWithTranslation]: Protein } = {
+type RelaseFactorProtein = 'STOP';
+const releaseFactorProtein: RelaseFactorProtein = 'STOP';
+
+const codonToProtein: { [K in Codon]: Protein | RelaseFactorProtein } = {
   AUG: 'Methionine',
   UUU: 'Phenylalanine',
   UUC: 'Phenylalanine',
@@ -41,6 +44,9 @@ const codonToProtein: { [K in CodonWithTranslation]: Protein } = {
   UGU: 'Cysteine',
   UGC: 'Cysteine',
   UGG: 'Tryptophan',
+  UAA: releaseFactorProtein,
+  UAG: releaseFactorProtein,
+  UGA: releaseFactorProtein,
 };
 
 const stopCodons = ['UAA', 'UAG', 'UGA'];
@@ -54,10 +60,8 @@ class ProteinTranslation {
 
     for (const codon of codons) {
       if (stopCodons.includes(codon)) break;
-      if (this.isCodonWithTranslation(codon)) {
-        const protein = codonToProtein[codon];
-        proteins.push(protein);
-      }
+      const protein = codonToProtein[codon];
+      proteins.push(protein as Protein);
     }
 
     return proteins;
@@ -75,11 +79,6 @@ class ProteinTranslation {
     } else {
       return s as Codon;
     }
-  }
-
-  private static isCodonWithTranslation(s: string): s is CodonWithTranslation {
-    const re = /^(AUG|UUU|UUC|UUA|UUG|UCU|UCC|UCA|UCG|UAU|UAC|UGU|UGC|UGG)$/;
-    return re.test(s);
   }
 }
 
