@@ -1,32 +1,9 @@
-type Protein =
-  | 'Methionine'
-  | 'Phenylalanine'
-  | 'Serine'
-  | 'Leucine'
-  | 'Tyrosine'
-  | 'Cysteine'
-  | 'Tryptophan';
-
+type CodonWithTranslation = keyof typeof codonToProtein;
+type Protein = typeof codonToProtein[CodonWithTranslation];
 type StopCodon = 'UAA' | 'UAG' | 'UGA';
 type Codon = StopCodon | CodonWithTranslation;
 
-type CodonWithTranslation =
-  | 'AUG'
-  | 'UUU'
-  | 'UUC'
-  | 'UUA'
-  | 'UUG'
-  | 'UCU'
-  | 'UCC'
-  | 'UCA'
-  | 'UCG'
-  | 'UAU'
-  | 'UAC'
-  | 'UGU'
-  | 'UGC'
-  | 'UGG';
-
-const codonToProtein: { [K in CodonWithTranslation]: Protein } = {
+const codonToProtein = {
   AUG: 'Methionine',
   UUU: 'Phenylalanine',
   UUC: 'Phenylalanine',
@@ -42,8 +19,6 @@ const codonToProtein: { [K in CodonWithTranslation]: Protein } = {
   UGC: 'Cysteine',
   UGG: 'Tryptophan',
 };
-
-// type CodonWithTranslation = keyof typeof codonToProtein;
 
 const stopCodons = ['UAA', 'UAG', 'UGA'];
 
