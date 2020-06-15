@@ -54,8 +54,8 @@ class ProteinTranslation {
     }
   }
 
-  private static isStopCodon(s: string): s is StopCodon {
-    return Boolean(stopCodons.find((c) => c === s));
+  private static isStopCodon(c: Codon): c is StopCodon {
+    return stopCodons.includes(c as StopCodon);
   }
 
   private static isCodonWithTranslation(s: string): s is CodonWithTranslation {
