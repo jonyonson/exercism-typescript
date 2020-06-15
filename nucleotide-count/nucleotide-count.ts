@@ -11,7 +11,9 @@ class NucleotideCount {
       T: 0,
     };
 
-    [...dna].forEach((strand) => nucleotideCount[strand as Dna]++);
+    for (const strand of dna) {
+      nucleotideCount[strand as Dna]++;
+    }
 
     return nucleotideCount;
   }
