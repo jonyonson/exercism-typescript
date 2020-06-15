@@ -18,9 +18,9 @@ const codonToProtein = {
   UGU: 'Cysteine',
   UGC: 'Cysteine',
   UGG: 'Tryptophan',
-};
+} as const;
 
-const stopCodons = ['UAA', 'UAG', 'UGA'];
+const stopCodons: StopCodon[] = ['UAA', 'UAG', 'UGA'];
 
 class ProteinTranslation {
   private static validCodons = Object.keys(codonToProtein).concat(stopCodons);
@@ -30,7 +30,7 @@ class ProteinTranslation {
     const proteins: Protein[] = [];
 
     for (const codon of codons) {
-      if (stopCodons.includes(codon)) break;
+      if (this.isStopCodon(codon)) break;
       if (this.isCodonWithTranslation(codon)) {
         const protein = codonToProtein[codon];
         proteins.push(protein);
@@ -52,6 +52,10 @@ class ProteinTranslation {
     } else {
       return s as Codon;
     }
+  }
+
+  private static isStopCodon(s: string): s is StopCodon {
+    return stopCodons.some((c) => c === s);
   }
 
   private static isCodonWithTranslation(s: string): s is CodonWithTranslation {
