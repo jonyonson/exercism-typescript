@@ -1,25 +1,27 @@
-type Dna = 'A' | 'C' | 'G' | 'T';
+type DNA = 'A' | 'C' | 'G' | 'T';
 
 class NucleotideCount {
   static nucleotideCounts(dna: string) {
-    this.throwIfDNASequenceIsInvalid(dna);
-
-    const nucleotideCount: { [key in Dna]: number } = {
+    const nucleotideCount: { [key in DNA]: number } = {
       A: 0,
       C: 0,
       G: 0,
       T: 0,
     };
 
-    [...dna].forEach((strand) => nucleotideCount[strand as Dna]++);
+    [...dna].forEach((strand) => {
+      if (this.isDNA(strand)) {
+        nucleotideCount[strand]++;
+      } else {
+        throw new Error('Invalid nucleotide in strand');
+      }
+    });
 
     return nucleotideCount;
   }
 
-  private static throwIfDNASequenceIsInvalid(dna: string) {
-    if (!/^$|^[ACGT]+$/.test(dna)) {
-      throw new Error('Invalid nucleotide in strand');
-    }
+  private static isDNA(s: string): s is DNA {
+    return /^$|^[ACGT]+$/.test(s);
   }
 }
 
