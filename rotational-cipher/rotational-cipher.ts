@@ -1,8 +1,11 @@
+type Range = [number, number];
+
 export default class RotationalCipher {
-  private static readonly UPPERCASE_A_CODE = 'A'.charCodeAt(0);
-  private static readonly UPPERCASE_Z_CODE = 'Z'.charCodeAt(0);
-  private static readonly LOWERCASE_A_CODE = 'a'.charCodeAt(0);
-  private static readonly LOWERCASE_Z_CODE = 'z'.charCodeAt(0);
+  private static readonly ALPHABET_LENGTH: number;
+  private static readonly LETTER_RANGES: Range[] = [
+    ['A'.charCodeAt(0), 'Z'.charCodeAt(0)],
+    ['a'.charCodeAt(0), 'z'.charCodeAt(0)],
+  ];
 
   static rotate(text: string, rotations: number): string {
     return [...text]
@@ -13,7 +16,7 @@ export default class RotationalCipher {
   private static encrypt(char: string, rotations: number): string {
     if (char.match(/[a-z]/i)) {
       const code = char.charCodeAt(0);
-      let [upperBounds, lowerBounds] = RotationalCipher.getBounds(code);
+      let [lowerBounds, upperBounds] = RotationalCipher.getBounds(code);
 
       if (code >= lowerBounds && code <= upperBounds) {
         return String.fromCharCode(
@@ -25,19 +28,11 @@ export default class RotationalCipher {
     return char;
   }
 
-  private static getBounds(code: number): number[] {
-    let upperBounds, lowerBounds;
+  private static getBounds(code: number): Range {
+    let range = this.LETTER_RANGES.find((r: Range) => {
+      return r[0] <= code && r[1] >= code;
+    });
 
-    // Uppercase letter
-    if (code < RotationalCipher.LOWERCASE_A_CODE) {
-      upperBounds = RotationalCipher.UPPERCASE_Z_CODE;
-      lowerBounds = RotationalCipher.UPPERCASE_A_CODE;
-    } else {
-      // Lowercase letter
-      upperBounds = RotationalCipher.LOWERCASE_Z_CODE;
-      lowerBounds = RotationalCipher.LOWERCASE_A_CODE;
-    }
-
-    return [upperBounds, lowerBounds];
+    return range as Range;
   }
 }
