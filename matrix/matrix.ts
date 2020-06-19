@@ -1,10 +1,10 @@
 class Matrix {
-  private readonly matrixString: string;
+  private readonly matrixData: string;
   private readonly matrix: number[][];
 
-  constructor(matrixString: string) {
-    this.matrixString = matrixString;
-    this.matrix = this._matrix();
+  constructor(matrixData: string) {
+    this.matrixData = matrixData;
+    this.matrix = this.create2dArrayFromMatrixData();
   }
 
   get rows(): number[][] {
@@ -12,13 +12,17 @@ class Matrix {
   }
 
   get columns(): number[][] {
-    return this.matrix[0].map((_, i) => this.matrix.map((row) => row[i]));
+    return this.transposeMatrix();
   }
 
-  private _matrix(): number[][] {
-    return this.matrixString
+  private create2dArrayFromMatrixData(): number[][] {
+    return this.matrixData
       .split('\n')
       .map((row) => row.split(' ').map((num) => Number(num)));
+  }
+
+  private transposeMatrix(): number[][] {
+    return this.matrix[0].map((_, i) => this.matrix.map((row) => row[i]));
   }
 }
 
