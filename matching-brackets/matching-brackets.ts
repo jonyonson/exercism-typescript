@@ -9,13 +9,8 @@ type RightBracket = typeof openToClosingBrackets[LeftBracket];
 type Bracket = LeftBracket | RightBracket;
 
 class MatchingBrackets {
-  private readonly leftBrackets: LeftBracket[];
-  private readonly rightBrackets: RightBracket[];
-
   constructor(private string: string) {
     this.string = string;
-    this.leftBrackets = ['[', '{', '('];
-    this.rightBrackets = [']', '}', ')'];
   }
 
   isPaired(): boolean {
