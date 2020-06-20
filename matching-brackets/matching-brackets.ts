@@ -30,17 +30,16 @@ class MatchingBrackets {
         }
       }
     }
-    console.log(stack);
 
     return stack.length > 0 ? false : true;
   }
 
   private isLeftBracket(char: string): char is LeftBracket {
-    return this.leftBrackets.includes(char as LeftBracket);
+    return /\(|\[|\{/.test(char);
   }
 
   private isRightBracket(char: string): char is RightBracket {
-    return this.rightBrackets.includes(char as RightBracket);
+    return /\)|\]|\}/.test(char);
   }
 }
 
