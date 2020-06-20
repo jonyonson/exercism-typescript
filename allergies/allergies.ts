@@ -1,13 +1,3 @@
-// type Allergen =
-//   | 'eggs'
-//   | 'peanuts'
-//   | 'shellfish'
-//   | 'strawberries'
-//   | 'tomatoes'
-//   | 'chocolate'
-//   | 'pollen'
-//   | 'cats';
-
 const bitmask: { [key: string]: number } = {
   eggs: 1,
   peanuts: 2,
@@ -19,23 +9,22 @@ const bitmask: { [key: string]: number } = {
   cats: 128,
 };
 
+type Allergen = keyof typeof bitmask;
+
 class Allergies {
   readonly score: number;
-  private readonly allergens = Object.entries(bitmask);
+  private readonly allergens: Allergen[] = Object.keys(bitmask);
 
   constructor(score: number) {
     this.score = score;
   }
 
-  allergicTo(allergen: string): boolean {
+  allergicTo(allergen: Allergen): boolean {
     return Boolean(this.score & bitmask[allergen]);
   }
 
-  // list(): Allergen[] {}
-  list(): string[] {
-    return this.allergens
-      .filter(([, flag]) => this.score & flag)
-      .map(([allergen]) => allergen);
+  list(): Allergen[] {
+    return this.allergens.filter((allergen) => this.allergicTo(allergen));
   }
 }
 
