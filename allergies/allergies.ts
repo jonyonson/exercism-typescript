@@ -1,4 +1,4 @@
-const bitmask: { [key: string]: number } = {
+const bitmask = {
   eggs: 1,
   peanuts: 2,
   shellfish: 4,
@@ -13,7 +13,7 @@ type Allergen = keyof typeof bitmask;
 
 class Allergies {
   readonly score: number;
-  private readonly allergens: Allergen[] = Object.keys(bitmask);
+  private readonly allergens = Object.keys(bitmask) as Allergen[];
 
   constructor(score: number) {
     this.score = score;
