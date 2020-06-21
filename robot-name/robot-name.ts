@@ -7,7 +7,7 @@ class RobotName {
     this.name = this.generateRandomName();
   }
 
-  resetName() {
+  resetName(): void {
     this.name = this.generateRandomName();
   }
 
