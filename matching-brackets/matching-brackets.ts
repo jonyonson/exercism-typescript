@@ -26,7 +26,7 @@ class MatchingBrackets {
       }
     }
 
-    return stack.length > 0 ? false : true;
+    return stack.length === 0;
   }
 
   private isLeftBracket(char: string): char is LeftBracket {
