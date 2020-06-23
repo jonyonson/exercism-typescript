@@ -1,7 +1,8 @@
-function transform(old: {
-  [key: string]: string[];
-}): { [key: string]: number } {
-  const transformedData: { [key: string]: number } = {};
+type LegacyData = { [key: string]: string[] };
+type TransformedData = { [key: string]: number };
+
+function transform(old: LegacyData): TransformedData {
+  const transformedData: TransformedData = {};
 
   Object.entries(old).forEach(([points, letters]) => {
     letters.forEach((letter) => {
