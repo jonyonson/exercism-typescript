@@ -1,8 +1,10 @@
+type Collection = (string | number)[];
+
 function accumulate(
-  array: (string | number)[],
+  collection: Collection,
   accumulator: (x: any) => any,
-): (string | number)[] {
-  return array.map(accumulator);
+): Collection {
+  return collection.map(accumulator);
 }
 
 export default accumulate;
