@@ -9,14 +9,14 @@ type RightBracket = typeof openToClosingBrackets[LeftBracket];
 type Bracket = LeftBracket | RightBracket;
 
 class MatchingBrackets {
-  constructor(private string: string) {
-    this.string = string;
+  constructor(private stringWithBrackets: string) {
+    this.stringWithBrackets = stringWithBrackets;
   }
 
   isPaired(): boolean {
     const stack: Bracket[] = [];
 
-    for (const char of this.string) {
+    for (const char of this.stringWithBrackets) {
       if (this.isLeftBracket(char)) {
         stack.push(openToClosingBrackets[char]);
       } else if (this.isRightBracket(char)) {
