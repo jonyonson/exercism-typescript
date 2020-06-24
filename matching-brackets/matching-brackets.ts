@@ -30,11 +30,11 @@ class MatchingBrackets {
   }
 
   private isLeftBracket(char: string): char is LeftBracket {
-    return /\(|\[|\{/.test(char);
+    return char in openToClosingBrackets;
   }
 
   private isRightBracket(char: string): char is RightBracket {
-    return /\)|\]|\}/.test(char);
+    return Object.values(openToClosingBrackets).includes(char as RightBracket);
   }
 }
 
