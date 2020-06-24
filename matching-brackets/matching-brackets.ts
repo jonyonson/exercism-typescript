@@ -9,24 +9,32 @@ type RightBracket = typeof openToClosingBrackets[LeftBracket];
 type Bracket = LeftBracket | RightBracket;
 
 class MatchingBrackets {
+  private unclosedBrackets: Bracket[] = [];
+
   constructor(private stringWithBrackets: string) {
     this.stringWithBrackets = stringWithBrackets;
+    this.unclosedBrackets = [];
   }
 
   isPaired(): boolean {
-    const stack: Bracket[] = [];
-
     for (const char of this.stringWithBrackets) {
       if (this.isLeftBracket(char)) {
-        stack.push(openToClosingBrackets[char]);
-      } else if (this.isRightBracket(char)) {
-        if (stack.length === 0 || char !== stack.pop()) {
-          return false;
-        }
+        this.unclosedBrackets.push(char);
+      } else if (
+        this.isRightBracket(char) &&
+        this.closesPreviousBracket(char)
+      ) {
+        return false;
       }
     }
+    return this.unclosedBrackets.length === 0;
+  }
 
-    return stack.length === 0;
+  private closesPreviousBracket(char: RightBracket): boolean {
+    const previousLeftBracket = this.unclosedBrackets.pop();
+    return this.unclosedBrackets.length
+      ? false
+      : char !== openToClosingBrackets[previousLeftBracket as LeftBracket];
   }
 
   private isLeftBracket(char: string): char is LeftBracket {
