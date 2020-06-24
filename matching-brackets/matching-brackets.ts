@@ -20,21 +20,18 @@ class MatchingBrackets {
     for (const char of this.stringWithBrackets) {
       if (this.isLeftBracket(char)) {
         this.unclosedBrackets.push(char);
-      } else if (
-        this.isRightBracket(char) &&
-        this.closesPreviousBracket(char)
-      ) {
-        return false;
+      } else if (this.isRightBracket(char)) {
+        if (this.doesNotClosePreviousBracket(char)) return false;
       }
     }
     return this.unclosedBrackets.length === 0;
   }
 
-  private closesPreviousBracket(char: RightBracket): boolean {
+  private doesNotClosePreviousBracket(char: RightBracket): boolean {
+    if (this.unclosedBrackets.length === 0) return true;
     const previousLeftBracket = this.unclosedBrackets.pop();
-    return this.unclosedBrackets.length
-      ? false
-      : char !== openToClosingBrackets[previousLeftBracket as LeftBracket];
+
+    return char !== openToClosingBrackets[previousLeftBracket as LeftBracket];
   }
 
   private isLeftBracket(char: string): char is LeftBracket {
