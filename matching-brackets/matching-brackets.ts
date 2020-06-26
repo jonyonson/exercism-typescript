@@ -8,29 +8,28 @@ type LeftBracket = keyof typeof openToClosingBrackets;
 type RightBracket = typeof openToClosingBrackets[LeftBracket];
 
 class MatchingBrackets {
-  private unclosedBrackets: LeftBracket[] = [];
+  private leftBrackets: LeftBracket[] = [];
 
-  constructor(private stringWithBrackets: string) {
-    this.stringWithBrackets = stringWithBrackets;
-    this.unclosedBrackets = [];
+  constructor(private sentence: string) {
+    this.sentence = sentence;
   }
 
   isPaired(): boolean {
-    for (const char of this.stringWithBrackets) {
+    for (const char of this.sentence) {
       if (this.isLeftBracket(char)) {
-        this.unclosedBrackets.push(char);
+        this.leftBrackets.push(char);
       } else if (this.isRightBracket(char)) {
-        if (this.doesNotClosePreviousBracket(char)) return false;
+        if (!this.matchesLeftBracket(char)) return false;
       }
     }
-    return this.unclosedBrackets.length === 0;
+    return this.leftBrackets.length === 0;
   }
 
-  private doesNotClosePreviousBracket(char: RightBracket): boolean {
-    if (this.unclosedBrackets.length === 0) return true;
-    const previousLeftBracket = this.unclosedBrackets.pop();
+  private matchesLeftBracket(char: RightBracket): boolean {
+    if (this.leftBrackets.length === 0) return false;
+    const previousLeftBracket = this.leftBrackets.pop();
 
-    return char !== openToClosingBrackets[previousLeftBracket as LeftBracket];
+    return char === openToClosingBrackets[previousLeftBracket as LeftBracket];
   }
 
   private isLeftBracket(char: string): char is LeftBracket {
