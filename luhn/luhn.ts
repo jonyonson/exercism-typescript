@@ -1,12 +1,8 @@
 class Luhn {
-  static valid(string: string): boolean {
-    return this.passesLuhnTest(string.trim());
-  }
-
-  static passesLuhnTest(string: string) {
-    if (this.isInvalidInput(string)) return false;
-    const everyOtherDoubled = this.doubleEveryOther(string);
-    const sum = this.sumAllDigits(everyOtherDoubled);
+  static valid(idNumber: string): boolean {
+    if (this.isInvalidInput(idNumber)) return false;
+    const everyOtherDoubled = this.doubleEveryOther(idNumber);
+    const sum = this.sum(everyOtherDoubled);
 
     return this.isDivisibleBy10(sum);
   }
@@ -31,7 +27,7 @@ class Luhn {
     return sum % 10 == 0;
   }
 
-  static sumAllDigits(string: string): number {
+  static sum(string: string): number {
     return [...string].reduce((acc, cv) => acc + Number(cv), 0);
   }
 
