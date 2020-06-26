@@ -19,17 +19,20 @@ class MatchingBrackets {
       if (this.isLeftBracket(char)) {
         this.leftBrackets.push(char);
       } else if (this.isRightBracket(char)) {
-        if (!this.matchesLeftBracket(char)) return false;
+        const lastOpen = this.leftBrackets.pop();
+        if (!this.matchingBrackets(lastOpen, char)) return false;
       }
     }
     return this.leftBrackets.length === 0;
   }
 
-  private matchesLeftBracket(char: RightBracket): boolean {
-    if (this.leftBrackets.length === 0) return false;
-    const previousLeftBracket = this.leftBrackets.pop();
-
-    return char === openToClosingBrackets[previousLeftBracket as LeftBracket];
+  private matchingBrackets(
+    leftBracket: LeftBracket | undefined,
+    rightBracket: RightBracket,
+  ): boolean {
+    return leftBracket
+      ? rightBracket === openToClosingBrackets[leftBracket]
+      : false;
   }
 
   private isLeftBracket(char: string): char is LeftBracket {
