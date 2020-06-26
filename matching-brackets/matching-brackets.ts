@@ -6,10 +6,9 @@ const openToClosingBrackets = {
 
 type LeftBracket = keyof typeof openToClosingBrackets;
 type RightBracket = typeof openToClosingBrackets[LeftBracket];
-type Bracket = LeftBracket | RightBracket;
 
 class MatchingBrackets {
-  private unclosedBrackets: Bracket[] = [];
+  private unclosedBrackets: LeftBracket[] = [];
 
   constructor(private stringWithBrackets: string) {
     this.stringWithBrackets = stringWithBrackets;
