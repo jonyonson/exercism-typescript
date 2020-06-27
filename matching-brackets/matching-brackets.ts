@@ -20,7 +20,7 @@ class MatchingBrackets {
         this.leftBrackets.push(char);
       } else if (this.isRightBracket(char)) {
         const lastOpen = this.leftBrackets.pop();
-        if (!lastOpen || !this.matchingBrackets(lastOpen, char)) return false;
+        if (lastOpen && !this.matchingBrackets(lastOpen, char)) return false;
       }
     }
     return this.leftBrackets.length === 0;
