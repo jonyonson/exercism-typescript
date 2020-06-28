@@ -1,4 +1,4 @@
-import RobotName from './robot-name';
+import RobotName, { RobotFactory } from './robot-name';
 
 const TOTAL_NUMBER_OF_NAMES =
   26 * // A-Z
@@ -87,10 +87,12 @@ describe('Robot', () => {
   });
 
   it('all the names can be generated', () => {
-    const usedNames = new Set();
-    usedNames.add(robot.name);
+    RobotFactory.releaseNames();
 
-    for (let i = 0; i < TOTAL_NUMBER_OF_NAMES - 1; i += 1) {
+    const usedNames = new Set();
+    // usedNames.add(robot.name);
+
+    for (let i = 0; i < TOTAL_NUMBER_OF_NAMES; i += 1) {
       const newRobot = new RobotName();
       usedNames.add(newRobot.name);
     }

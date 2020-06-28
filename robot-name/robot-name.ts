@@ -1,75 +1,53 @@
-class RobotName {
-  name: string;
-  private usedNames: Set<string>;
+const TOTAL_NUMBER_OF_NAMES =
+  26 * // A-Z
+  26 * // A-Z
+  10 * // 0-9
+  10 * // 0-9
+  10; // 0-9
 
-  constructor() {
-    this.usedNames = new Set();
-    this.name = this.generateRandomName();
+export class RobotFactory {
+  private static usedNames = new Set();
+
+  static addName(name: string): void {
+    this.usedNames.add(name);
   }
 
-  resetName(): void {
-    this.name = this.generateRandomName();
+  static hasName(name: string): boolean {
+    this.checkNameAvailability();
+    return this.usedNames.has(name);
   }
 
-  // private generateRandomName(): string {
-  //   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  //   const digits = '0123456789';
-  //   const random = function (val: string): string {
-  //     return val[Math.floor(Math.random() * val.length)];
-  //   };
-  //   const createName = function (): string {
-  //     return (
-  //       random(letters) +
-  //       random(letters) +
-  //       random(digits) +
-  //       random(digits) +
-  //       random(digits)
-  //     );
-  //   };
-  //   let name = createName();
-  //   while (this.usedNames.has(name)) {
-  //     name = createName();
-  //   }
-  //   this.usedNames.add(name);
-  //   return name;
-  // }
+  static releaseNames(): void {
+    this.usedNames.clear();
+  }
 
-  private generateRandomName(): string {
-    // const randomName = (): string =>
-    //   this.generatePrefix() + this.generateSuffix();
-
-    // let name = randomName();
-    // while (this.usedNames.has(name)) {
-    //   name = randomName();
-    // }
-    // this.usedNames.add(name);
-
-    // return name;
-
-    const randomName = this.generatePrefix() + this.generateSuffix();
-
-    if (this.usedNames.has(randomName)) {
-      return this.generateRandomName();
-    } else {
-      this.usedNames.add(randomName);
+  static assignName(): string {
+    let randomName = this.generateRandomName();
+    while (this.hasName(randomName)) {
+      randomName = this.generateRandomName();
     }
+    this.addName(randomName);
 
     return randomName;
   }
 
-  private generatePrefix(): string {
-    return this.generateUppercaseLetter() + this.generateUppercaseLetter();
+  private static checkNameAvailability(): void {
+    if (this.usedNames.size === TOTAL_NUMBER_OF_NAMES) {
+      throw new Error('The factory is full. No names available');
+    }
   }
 
-  private generateSuffix(): string {
+  private static generateRandomName(): string {
     return (
+      this.generateUppercaseLetter() +
+      this.generateUppercaseLetter() +
       this.generateRandomDigit() +
       this.generateRandomDigit() +
       this.generateRandomDigit()
     );
   }
 
-  private generateUppercaseLetter(): string {
+  private static generateUppercaseLetter(): string {
     const A_CHARCODE = 65;
     const Z_CHARCODE = 90;
     const charCode =
@@ -78,9 +56,23 @@ class RobotName {
     return String.fromCharCode(charCode);
   }
 
-  private generateRandomDigit(): string {
+  private static generateRandomDigit(): string {
     return Math.floor(Math.random() * 10).toString();
   }
 }
 
-export default RobotName;
+export default class RobotName {
+  private _name: string;
+
+  constructor() {
+    this._name = RobotFactory.assignName();
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  resetName(): void {
+    this._name = RobotFactory.assignName();
+  }
+}
