@@ -3,10 +3,8 @@ class Hamming {
     this.assertValidLengths(strandA, strandB);
 
     let distance = 0;
-    for (const i in [...strandA]) {
-      if (strandA[i] !== strandB[i]) {
-        distance++;
-      }
+    for (let i = 0; i < strandA.length; i++) {
+      if (strandA[i] !== strandB[i]) distance++;
     }
 
     return distance;
