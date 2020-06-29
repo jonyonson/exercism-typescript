@@ -1,17 +1,17 @@
 class Luhn {
-  static valid(idNumber: string): boolean {
-    if (this.isInvalidInput(idNumber)) return false;
-    const everyOtherDoubled = this.doubleEveryOther(idNumber);
+  static valid(digitSequence: string): boolean {
+    if (this.isInvalidInput(digitSequence)) return false;
+    const everyOtherDoubled = this.doubleEveryOtherDigit(digitSequence);
     const sum = this.sum(everyOtherDoubled);
 
     return this.isDivisibleBy10(sum);
   }
 
-  static doubleEveryOther(string: string): string {
-    string = string.replace(/\s/g, '');
-    return [...string]
+  static doubleEveryOtherDigit(sequence: string): string {
+    sequence = sequence.replace(/\s/g, '');
+    return [...sequence]
       .map((char, i) => {
-        if ((string.length - i) % 2 === 0) {
+        if ((sequence.length - i) % 2 === 0) {
           let doubled = Number(char) * 2;
           if (doubled > 9) doubled -= 9;
 
@@ -27,12 +27,12 @@ class Luhn {
     return sum % 10 == 0;
   }
 
-  static sum(string: string): number {
-    return [...string].reduce((acc, cv) => acc + Number(cv), 0);
+  static sum(digits: string): number {
+    return [...digits].reduce((acc, cv) => acc + Number(cv), 0);
   }
 
-  static isInvalidInput(string: string): boolean {
-    return string.length <= 1 || !/^[0-9 ]+$/.test(string);
+  static isInvalidInput(input: string): boolean {
+    return input.length <= 1 || !/^[0-9 ]+$/.test(input);
   }
 }
 
