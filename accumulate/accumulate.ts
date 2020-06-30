@@ -2,9 +2,12 @@ type Collection = (string | number)[];
 
 function accumulate(
   collection: Collection,
-  accumulator: (x: any) => any,
+  accumulator: (n: any) => any,
 ): Collection {
-  return collection.map(accumulator);
+  const results: Collection = [];
+  collection.forEach((v) => results.push(accumulator(v)));
+
+  return results;
 }
 
 export default accumulate;
