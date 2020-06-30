@@ -1,5 +1,5 @@
 export default class GradeSchool {
-  roster: Map<number, string[]>;
+  private roster: Map<number, string[]>;
 
   constructor() {
     this.roster = new Map<number, string[]>();
