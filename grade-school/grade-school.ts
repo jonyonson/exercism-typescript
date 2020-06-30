@@ -16,8 +16,9 @@ export default class GradeSchool {
   }
 
   studentRoster(): Map<string, string[]> {
+    const entries = Array.from(this.roster.entries());
     return new Map<string, string[]>(
-      [...this.roster.entries()].map(([k, v]) => [k.toString(), [...v]]),
+      entries.map(([key, value]) => [key.toString(), [...value]]),
     );
   }
 }
