@@ -6,22 +6,15 @@ export default class Anagram {
   }
 
   matches(...words: string[]): string[] {
-    const anagrams: string[] = [];
-    words.forEach((word) => {
-      if (this.isAnagram(word)) {
-        anagrams.push(word);
-      }
-    });
-
-    return anagrams;
+    return words.filter((w) => this.isAnagram(w));
   }
 
   private isAnagram(w: string): boolean {
     if (this.isExactMatch(w)) return false;
-    return this.regularize(w) === this.regularize(this.word);
+    return this.normalize(w) === this.normalize(this.word);
   }
 
-  private regularize(word: string): string {
+  private normalize(word: string): string {
     return [...word.toLowerCase()].sort().join('').trim();
   }
 
