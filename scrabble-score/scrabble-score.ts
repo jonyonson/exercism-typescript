@@ -27,11 +27,12 @@ const tileValues: { [key: string]: number } = {
   Z: 10,
 };
 
-export default function score(word: string | undefined): number {
-  if (word == null) return 0;
+export default function score(word?: string): number {
+  if (!word) return 0;
 
-  let score = 0;
-  [...word].forEach((letter) => (score += tileValues[letter.toUpperCase()]));
+  const score = [...word.toUpperCase()].reduce((acc, cur) => {
+    return acc + tileValues[cur];
+  }, 0);
 
   return score;
 }
