@@ -1,4 +1,4 @@
-const bitmask = {
+const allergenToValue = {
   eggs: 1,
   peanuts: 2,
   shellfish: 4,
@@ -9,22 +9,22 @@ const bitmask = {
   cats: 128,
 };
 
-type Allergen = keyof typeof bitmask;
+type Allergen = keyof typeof allergenToValue;
 
 class Allergies {
   readonly score: number;
-  private readonly allergens = Object.keys(bitmask) as Allergen[];
+  private static allergens = Object.keys(allergenToValue) as Allergen[];
 
   constructor(score: number) {
     this.score = score;
   }
 
   allergicTo(allergen: Allergen): boolean {
-    return Boolean(this.score & bitmask[allergen]);
+    return Boolean(this.score & allergenToValue[allergen]);
   }
 
   list(): Allergen[] {
-    return this.allergens.filter((allergen) => this.allergicTo(allergen));
+    return Allergies.allergens.filter((allergen) => this.allergicTo(allergen));
   }
 }
 
