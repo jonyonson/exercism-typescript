@@ -9,8 +9,6 @@ class Luhn {
   }
 
   static doubleEveryOtherDigit(digits: number[]): number[] {
-    // sequence = sequence.replace(/\s/g, '');
-    // return [...sequence]
     return digits.map((d, i) => {
       if ((digits.length - i) % 2 === 0) {
         let doubled = d * 2;
